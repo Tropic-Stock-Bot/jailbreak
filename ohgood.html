@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jailbreak Stock & Values - Terms & Privacy</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      overflow-x: hidden;
+      transition: all 0.3s ease;
+      font-family: monospace;
+    }
+
+    .glass {
+      background: rgba(15, 15, 15, 0.65);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .navbar {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 1200px;
+      z-index: 100;
+      border-radius: 24px;
+      padding: 14px 24px;
+    }
+
+    .hero-bg::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(59,130,246,0.25), transparent 40%),
+        radial-gradient(circle at bottom right, rgba(168,85,247,0.25), transparent 40%);
+      z-index: -1;
+    }
+
+    .gradient-text {
+      background: linear-gradient(to right, #60a5fa, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .card {
+      transition: 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(96,165,250,0.4);
+      box-shadow: 0 0 40px rgba(96,165,250,0.08);
+    }
+
+    .tab-content {
+      display: none;
+      animation: fade 0.4s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(to right, #2563eb, #9333ea);
+      color: white;
+    }
+
+    @keyframes fade {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0px);
+      }
+    }
+
+    .glow {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 999px;
+      filter: blur(120px);
+      opacity: 0.15;
+      z-index: -1;
+    }
+
+    .glow-blue {
+      background: #3b82f6;
+      top: -100px;
+      left: -100px;
+    }
+
+    .glow-purple {
+      background: #9333ea;
+      bottom: -100px;
+      right: -100px;
+    }
+
+    a {
+      transition: 0.3s ease;
+    }
+
+    a:hover {
+      color: #60a5fa;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="glow glow-blue"></div>
+  <div class="glow glow-purple"></div>
+
+  <!-- NAVBAR -->
+  <header class="navbar glass">
+    <nav class="flex items-center justify-between">
+
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-xl">
+          🚔
+        </div>
+        <h1 class="text-2xl font-bold">
+          Jailbreak Stock & Values
+        </h1>
+      </div>
+
+      <div class="flex gap-4">
+
+        <button class="tab-btn active px-4 py-2 rounded-xl text-sm font-semibold hover:bg-white hover:bg-opacity-10 transition"
+          data-tab="home">
+          Home
+        </button>
+
+        <button class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold hover:bg-white hover:bg-opacity-10 transition"
+          data-tab="terms">
+          Terms
+        </button>
+
+        <button class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold hover:bg-white hover:bg-opacity-10 transition"
+          data-tab="privacy">
+          Privacy
+        </button>
+
+      </div>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main class="container mx-auto px-6 py-40 relative">
+
+    <!-- HOME -->
+    <section id="home" class="tab-content active">
+
+      <div class="hero-bg relative text-center mb-24">
+
+        <h2 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+          The Ultimate <span class="gradient-text">Jailbreak Tracking</span> Bot
+        </h2>
+
+        <p class="text-zinc-400 text-xl max-w-3xl mx-auto">
+          Real-time Jailbreak stock updates, value tracking, trade alerts,
+          safes, limiteds, weather notifications, and more — all inside Discord.
+        </p>
+
+        <div class="flex justify-center gap-6 mt-10 flex-wrap">
+
+          <button class="tab-btn px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 font-bold"
+            data-tab="terms">
+            View Terms
+          </button>
+
+          <button class="tab-btn px-8 py-4 rounded-2xl glass font-bold"
+            data-tab="privacy">
+            Privacy Policy
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+
+        <div class="card glass rounded-3xl p-8">
+          <h3 class="text-2xl font-bold mb-4">📦 Live Stocks</h3>
+          <p class="text-zinc-400">
+            Track safes, vehicles, rims, spoilers, hyperchromes, and more instantly.
+          </p>
+        </div>
+
+        <div class="card glass rounded-3xl p-8">
+          <h3 class="text-2xl font-bold mb-4">📈 Values</h3>
+          <p class="text-zinc-400">
+            Stay updated with community values and real-time trading demand.
+          </p>
+        </div>
+
+        <div class="card glass rounded-3xl p-8">
+          <h3 class="text-2xl font-bold mb-4">⚡ Fast Alerts</h3>
+          <p class="text-zinc-400">
+            Receive instant Discord notifications whenever stock changes happen.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- TERMS -->
+    <section id="terms" class="tab-content">
+
+      <div class="glass rounded-3xl p-10 mb-8 card">
+        <h2 class="text-4xl font-bold mb-4">Terms of Service</h2>
+        <p class="text-zinc-400">
+          Last Updated: May 23, 2026
+        </p>
+      </div>
+
+      <div class="space-y-8">
+
+        <div class="glass rounded-3xl p-8 card">
+          <h3 class="text-2xl font-bold mb-3">1. Acceptance of Terms</h3>
+          <p class="text-zinc-400">
+            By using Jailbreak Stock & Values on Discord, you agree to follow these Terms of Service and Discord's Terms.
+          </p>
+        </div>
+
+        <div class="glass rounded-3xl p-8 card">
+          <h3 class="text-2xl font-bold mb-3">2. Allowed Usage</h3>
+          <p class="text-zinc-400">
+            You may use the bot for tracking values, stock notifications, trade alerts, and related features.
+            Abuse, spam, exploit attempts, impersonation, or API overload attempts are prohibited.
+          </p>
+        </div>
+
+        <div class="glass rounded-3xl p-8 card">
+          <h3 class="text-2xl font-bold mb-3">3. Service Availability</h3>
+          <p class="text-zinc-400">
+            We do not guarantee uninterrupted uptime, instant alerts, or perfect data accuracy.
+            Features may change at any time without notice.
+          </p>
+        </div>
+
+        <div class="glass rounded-3xl p-8 card">
+          <h3 class="text-2xl font-bold mb-3">4. Liability</h3>
+          <p class="text-zinc-400">
+            Jailbreak Stock & Values is provided “as is.” We are not responsible for losses,
+            missed trades, inaccurate values, or server disruptions.
+          </p>
+        </div>
+
+        <div class="glass rounded-3xl p-8 card">
+          <h3 class="text-2xl font-bold mb-3">5. Changes</h3>
+          <p class="text-zinc-400">
+            These Terms may be updated or rewritten at any time. Continued use of the bot means
+            you agree to the latest version.
+          </p>
+        </div>
+
+        <div class="glass rounded-3xl p-8 card">
+          <h3 class="text-2xl font-bold mb-3">6. Contact</h3>
+          <p class="text-zinc-400">
+            Need support? Join our Discord server:
+            <a href="https://discord.gg/" target="_blank" class="text-blue-400">
+              discord.gg/
+            </a>
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- PRIVACY -->
+    <section id="privacy" class="tab-content">
+
+      <div class="glass rounded-3xl p-10 mb-8 card">
+        <h2 class="text-4xl font-bold mb-4">Privacy Policy</h2>
+        <p class="text-zinc-400">
+          Last Updated: May 23, 2026
+        </p>
+      </div>
+
+      <div class="space-y-8">
+
+        <div class="glass rounded-3xl p-8 card">
+          <h3 class="text-2xl font-bold mb-3">1. Information Stored</h3>
+          <p class="text-zinc-400">
+            We may store Discord IDs, server settings, alert channels,
+            stock preferences, and other required bot configuration data.
+          </p>
+        </div>
+
+        <div class="glass rounded-3xl p-8 card">
+          <h3 class="text-2xl font-bold mb-3">2. Data Usage</h3>
+          <p class="text-zinc-400">
+            Stored information is used strictly for bot functionality,
+            notification delivery, moderation systems, and service improvements.
+          </p>
+        </div>
+
+        <div class="glass rounded-3xl p-8 card">
+          <h3 class="text-2xl font-bold mb-3">3. Data Sharing</h3>
+          <p class="text-zinc-400">
+            We do not sell user information. Data may only be shared with
+            Discord services, required APIs, or legal authorities if necessary.
+          </p>
+        </div>
+
+        <div class="glass rounded-3xl p-8 card">
+          <h3 class="text-2xl font-bold mb-3">4. Security</h3>
+          <p class="text-zinc-400">
+            Reasonable safeguards are used to protect stored data,
+            though absolute security cannot be guaranteed.
+          </p>
+        </div>
+
+        <div class="glass rounded-3xl p-8 card">
+          <h3 class="text-2xl font-bold mb-3">5. User Rights</h3>
+          <p class="text-zinc-400">
+            You may remove the bot from your server at any time,
+            which revokes future data collection permissions.
+          </p>
+        </div>
+
+        <div class="glass rounded-3xl p-8 card">
+          <h3 class="text-2xl font-bold mb-3">6. Updates</h3>
+          <p class="text-zinc-400">
+            This Privacy Policy may be modified at any time to reflect
+            service updates or operational changes.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white border-opacity-10 py-10 text-center text-zinc-500">
+    <p>
+      © 2026 Jailbreak Stock & Values • All Rights Reserved
+    </p>
+  </footer>
+
+  <script>
+
+    const buttons = document.querySelectorAll('.tab-btn');
+    const contents = document.querySelectorAll('.tab-content');
+
+    buttons.forEach(button => {
+
+      button.addEventListener('click', () => {
+
+        const tab = button.getAttribute('data-tab');
+
+        contents.forEach(content => {
+          content.classList.remove('active');
+        });
+
+        buttons.forEach(btn => {
+          btn.classList.remove('active');
+        });
+
+        document.getElementById(tab).classList.add('active');
+        button.classList.add('active');
+
+      });
+
+    });
+
+  </script>
+
+</body>
+</html>
