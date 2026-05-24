@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Blox Fruits Stock Bot</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+<style>
+
+:root{
+--bg:#050505;
+--glass:rgba(255,255,255,0.04);
+--border:rgba(255,255,255,0.08);
+--text:#ffffff;
+--muted:#9ca3af;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+scroll-behavior:smooth;
+}
+
+body{
+background:var(--bg);
+color:var(--text);
+font-family:Inter,monospace;
+overflow-x:hidden;
+min-height:100vh;
+}
+
+.bg{
+position:fixed;
+inset:0;
+z-index:-10;
+overflow:hidden;
+}
+
+.bg::before{
+content:"";
+position:absolute;
+width:900px;
+height:900px;
+background:radial-gradient(circle,#f59e0b22,transparent 60%);
+top:-300px;
+left:-250px;
+animation:float1 14s ease-in-out infinite;
+}
+
+.bg::after{
+content:"";
+position:absolute;
+width:900px;
+height:900px;
+background:radial-gradient(circle,#ea580c22,transparent 60%);
+bottom:-350px;
+right:-250px;
+animation:float2 18s ease-in-out infinite;
+}
+
+@keyframes float1{
+0%{transform:translateY(0px);}
+50%{transform:translateY(40px);}
+100%{transform:translateY(0px);}
+}
+
+@keyframes float2{
+0%{transform:translateY(0px);}
+50%{transform:translateY(-60px);}
+100%{transform:translateY(0px);}
+}
+
+#transition{
+position:fixed;
+inset:0;
+background:black;
+z-index:9999;
+pointer-events:none;
+opacity:0;
+transition:opacity .45s ease;
+}
+
+#transition.active{
+opacity:1;
+}
+
+.glass{
+background:rgba(255,255,255,0.04);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,0.07);
+box-shadow:0 0 40px rgba(0,0,0,0.25);
+}
+
+.navbar{
+position:fixed;
+top:20px;
+left:50%;
+transform:translateX(-50%);
+width:92%;
+max-width:1250px;
+z-index:100;
+padding:16px 28px;
+border-radius:999px;
+}
+
+.nav-link{
+padding:12px 22px;
+border-radius:14px;
+font-weight:700;
+transition:.25s ease;
+color:#d1d5db;
+}
+
+.nav-link:hover{
+background:rgba(255,255,255,0.06);
+color:white;
+}
+
+.nav-active{
+background:rgba(255,255,255,0.08);
+color:white;
+}
+
+.hero{
+padding-top:220px;
+padding-bottom:120px;
+position:relative;
+text-align:center;
+}
+
+.hero-title{
+font-size:clamp(3rem,8vw,6rem);
+font-weight:900;
+line-height:1.05;
+letter-spacing:-2px;
+}
+
+.gradient{
+background:linear-gradient(to right,#fbbf24,#f97316);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.hero-desc{
+max-width:750px;
+margin:auto;
+margin-top:28px;
+color:var(--muted);
+font-size:1.2rem;
+line-height:2rem;
+}
+
+.hero-buttons{
+margin-top:50px;
+display:flex;
+justify-content:center;
+gap:18px;
+flex-wrap:wrap;
+}
+
+.primary-btn{
+background:linear-gradient(to right,#f59e0b,#ea580c);
+padding:16px 36px;
+border-radius:18px;
+font-weight:800;
+transition:.25s ease;
+}
+
+.primary-btn:hover{
+transform:translateY(-4px);
+box-shadow:0 12px 40px rgba(249,115,22,0.25);
+}
+
+.secondary-btn{
+padding:16px 36px;
+border-radius:18px;
+font-weight:800;
+transition:.25s ease;
+}
+
+.secondary-btn:hover{
+transform:translateY(-4px);
+background:rgba(255,255,255,0.06);
+}
+
+.section{
+display:none;
+animation:fade .5s ease;
+}
+
+.section.active{
+display:block;
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:translateY(25px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.grid-cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:28px;
+margin-top:80px;
+}
+
+.card{
+padding:36px;
+border-radius:30px;
+position:relative;
+overflow:hidden;
+transition:.3s ease;
+}
+
+.card:hover{
+transform:translateY(-8px);
+border-color:#f59e0b55;
+box-shadow:0 25px 60px rgba(249,115,22,.15);
+}
+
+.card::before{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(135deg,#ffffff08,transparent);
+opacity:0;
+transition:.3s ease;
+}
+
+.card:hover::before{
+opacity:1;
+}
+
+.card h3{
+font-size:1.5rem;
+font-weight:800;
+margin-bottom:18px;
+}
+
+.card p{
+color:var(--muted);
+line-height:1.9rem;
+font-size:1rem;
+}
+
+.policy-wrap{
+max-width:1200px;
+margin:auto;
+padding-top:160px;
+padding-bottom:120px;
+}
+
+.policy-header{
+padding:50px;
+border-radius:34px;
+margin-bottom:40px;
+}
+
+.policy-header h2{
+font-size:4rem;
+font-weight:900;
+}
+
+.policy-list{
+display:flex;
+flex-direction:column;
+gap:24px;
+}
+
+.policy-card{
+padding:38px;
+border-radius:30px;
+transition:.3s ease;
+}
+
+.policy-card:hover{
+transform:translateY(-6px);
+border-color:#f59e0b44;
+}
+
+.policy-card h3{
+font-size:1.6rem;
+margin-bottom:18px;
+font-weight:800;
+}
+
+.policy-card p{
+color:var(--muted);
+line-height:2rem;
+font-size:1rem;
+}
+
+footer{
+padding:70px 20px;
+border-top:1px solid rgba(255,255,255,0.08);
+text-align:center;
+color:#6b7280;
+font-size:.95rem;
+margin-top:80px;
+}
+
+@media(max-width:768px){
+
+.navbar{
+padding:14px 20px;
+}
+
+.nav-links{
+display:none;
+}
+
+.hero{
+padding-top:180px;
+}
+
+.policy-header h2{
+font-size:2.8rem;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<div id="transition"></div>
+
+<header class="navbar glass">
+
+<div class="flex items-center justify-between">
+
+<div class="flex items-center gap-4">
+
+<div class="w-12 h-12 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 flex items-center justify-center text-xl shadow-2xl">
+🍎
+</div>
+
+<div>
+<h1 class="font-extrabold text-2xl tracking-tight">
+Blox Fruits Stock Bot
+</h1>
+<p class="text-gray-500 text-sm">
+Realtime Discord Tracking Utility
+</p>
+</div>
+
+</div>
+
+<div class="nav-links flex items-center gap-3">
+
+<button class="nav-link nav-btn nav-active" data-page="home">
+Home
+</button>
+
+<button class="nav-link nav-btn" data-page="terms">
+Terms
+</button>
+
+<button class="nav-link nav-btn" data-page="privacy">
+Privacy
+</button>
+
+</div>
+
+</div>
+
+</header>
+
+<main class="container mx-auto px-6">
+
+<section id="home" class="section active hero">
+
+<h1 class="hero-title">
+The Ultimate
+<br>
+<span class="gradient">
+Blox Fruits Stock Bot
+</span>
+</h1>
+
+<p class="hero-desc">
+Real-time stock tracking, trading values, and instant Discord alerts for Blox Fruits players.
+</p>
+
+<div class="hero-buttons">
+
+<button class="primary-btn nav-btn" data-page="terms">
+View Terms
+</button>
+
+<button class="secondary-btn glass nav-btn" data-page="privacy">
+Privacy Policy
+</button>
+
+</div>
+
+<div class="grid-cards">
+
+<div class="card glass">
+
+<h3>
+📦 Live Stocks
+</h3>
+
+<p>
+Track fruit dealer stock rotations instantly with fast Discord updates, rare fruit alerts, mirage stock notifications, and automatic refresh tracking.
+</p>
+
+</div>
+
+<div class="card glass">
+
+<h3>
+📈 Trading Values
+</h3>
+
+<p>
+View updated community trading values, demand changes, market trends, and fair trade estimates directly inside your Discord server.
+</p>
+
+</div>
+
+<div class="card glass">
+
+<h3>
+🚨 Instant Alerts
+</h3>
+
+<p>
+Receive instant notifications for rare fruits, important updates, dealer resets, and high-value stock appearances with low-latency delivery systems.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="terms" class="section">
+
+<div class="policy-wrap">
+
+<div class="policy-header glass">
+
+<h2>
+Terms of Service
+</h2>
+
+<p class="text-gray-500 mt-3 text-lg">
+Last Updated — May 23, 2026
+</p>
+
+</div>
+
+<div class="policy-list">
+
+<div class="policy-card glass">
+<h3>1. Acceptance of Terms</h3>
+<p>
+By using Blox Fruits Stock Bot, you agree to these Terms of Service, Discord Terms of Service, and all applicable platform guidelines. Continued use of the bot confirms acceptance of any future changes, updates, or policy modifications.
+</p>
+</div>
+
+<div class="policy-card glass">
+<h3>2. Allowed Usage</h3>
+<p>
+Users may use the bot for stock tracking, notifications, trading values, and informational purposes only. Spam, abuse, exploit attempts, malicious usage, command flooding, automation abuse, or service disruption is strictly prohibited.
+</p>
+</div>
+
+<div class="policy-card glass">
+<h3>3. Service Availability</h3>
+<p>
+We strive to maintain stable uptime and accurate information, however we cannot guarantee uninterrupted service, instant updates, or complete reliability at all times due to external systems, game updates, maintenance, or hosting interruptions.
+</p>
+</div>
+
+<div class="policy-card glass">
+<h3>4. Market Accuracy</h3>
+<p>
+Trading values, stock information, demand estimates, and market trends are provided for informational purposes only. Values may change rapidly and users should make their own trading decisions without relying solely on the bot.
+</p>
+</div>
+
+<div class="policy-card glass">
+<h3>5. Limitations of Liability</h3>
+<p>
+We are not responsible for missed trades, inaccurate values, delayed notifications, lost opportunities, server issues, user decisions, or any direct or indirect damages resulting from use of the bot or reliance on its systems.
+</p>
+</div>
+
+<div class="policy-card glass">
+<h3>6. Feature Changes</h3>
+<p>
+Features, commands, systems, pricing, interfaces, notifications, and integrations may change at any time without prior notice. We reserve the right to modify or remove functionality whenever necessary.
+</p>
+</div>
+
+<div class="policy-card glass">
+<h3>7. Account Responsibility</h3>
+<p>
+Users are responsible for their Discord accounts, server configurations, permissions, and moderation settings. Improper configuration or misuse of the bot remains the responsibility of the server owner and administrators.
+</p>
+</div>
+
+<div class="policy-card glass">
+<h3>8. Abuse Prevention</h3>
+<p>
+Any attempt to abuse the service, overload systems, bypass restrictions, interfere with operations, or intentionally harm the platform may result in blacklist actions, service restrictions, or permanent removal of access.
+</p>
+</div>
+
+<div class="policy-card glass">
+<h3>9. Third-Party Services</h3>
+<p>
+The bot may rely on external APIs, hosting providers, Discord systems, and third-party services which may occasionally experience issues, outages, delays, or unexpected behavior outside of our control.
+</p>
+</div>
+
+<div class="policy-card glass">
+<h3>10. Updates to Terms</h3>
+<p>
+These Terms of Service may be updated periodically to reflect feature changes, legal requirements, infrastructure updates, operational improvements, or policy adjustments. Continued usage confirms acceptance of updated terms.
+</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section id="privacy" class="section">
+
+<div class="policy-wrap">
+
+<div class="policy-header glass">
+
+<h2>
+Privacy Policy
+</h2>
+
+<p class="text-gray-500 mt-3 text-lg">
+Last Updated — May 23, 2026
+</p>
+
+</div>
+
+<div class="policy-list">
+
+<div class="policy-card glass">
+<h3>1. Information Collection</h3>
+<p>
+We may collect Discord user IDs, server IDs, notification settings, command usage information, server preferences, and technical configuration data required for operation of the bot and its features.
+</p>
+</div>
+
+<div class="policy-card glass">
+<h3>2. Usage of Data</h3>
+<p>
+Collected information is used exclusively for delivering notifications, storing settings, improving performance, maintaining reliability, optimizing systems, troubleshooting issues, and enhancing the overall user experience.
+</p>
+</div>
+
+<div class="policy-card glass">
+<h3>3. Data Sharing</h3>
+<p>
+We do not sell, rent, or distribute user information to third parties. Information may only be disclosed when legally required or necessary for protecting systems, enforcing policies, or preventing abuse.
+</p>
+</div>
+
+<div class="policy-card glass">
+<h3>4. Security Measures</h3>
+<p>
+Reasonable safeguards are implemented to help protect stored information and maintain service security, though no online platform can guarantee absolute protection against all threats or unauthorized access attempts.
+</p>
+</div>
+
+<div class="policy-card glass">
+<h3>5. Notification Storage</h3>
+<p>
+Alert channels, stock preferences, custom configurations, and server settings may be stored temporarily or permanently to ensure proper delivery of notifications and continued operation of server integrations.
+</p>
+</div>
+
+<div class="policy-card glass">
+<h3>6. Technical Logs</h3>
+<p>
+System logs and technical diagnostics may be collected automatically for debugging, performance monitoring, error prevention, infrastructure analysis, and service stability improvements across the platform.
+</p>
+</div>
+
+<div class="policy-card glass">
+<h3>7. Third-Party Platforms</h3>
+<p>
+The bot operates through Discord and may interact with third-party infrastructure providers, APIs, hosting services, or analytics systems required for functionality, uptime, and operational maintenance.
+</p>
+</div>
+
+<div class="policy-card glass">
+<h3>8. User Control</h3>
+<p>
+Users may remove the bot from their server at any time. Removal prevents future data collection associated with that server, though temporary operational logs may still remain for maintenance purposes.
+</p>
+</div>
+
+<div class="policy-card glass">
+<h3>9. Data Retention</h3>
+<p>
+Some configuration data, usage information, or technical records may remain stored for operational, security, backup, or debugging purposes for a reasonable period before deletion or automatic cleanup.
+</p>
+</div>
+
+<div class="policy-card glass">
+<h3>10. Policy Updates</h3>
+<p>
+This Privacy Policy may be updated periodically to reflect changes in systems, features, legal obligations, operational requirements, or infrastructure improvements. Continued use confirms acceptance of updated policies.
+</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+© 2026 Blox Fruits Stock Bot — Designed for the Ultimate Trading Experience
+</footer>
+
+<script>
+
+const pages=document.querySelectorAll(".section");
+const buttons=document.querySelectorAll(".nav-btn");
+const transition=document.getElementById("transition");
+
+function switchPage(page){
+
+transition.classList.add("active");
+
+setTimeout(()=>{
+
+pages.forEach(section=>{
+section.classList.remove("active");
+});
+
+document.getElementById(page).classList.add("active");
+
+buttons.forEach(btn=>{
+btn.classList.remove("nav-active");
+});
+
+document.querySelectorAll(`[data-page="${page}"]`).forEach(btn=>{
+btn.classList.add("nav-active");
+});
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+transition.classList.remove("active");
+
+},400);
+
+}
+
+buttons.forEach(button=>{
+
+button.addEventListener("click",()=>{
+
+switchPage(button.dataset.page);
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
